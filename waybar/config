@@ -1,0 +1,61 @@
+{
+  "layer": "top",
+  "position": "top",
+  "output": "HDMI-A-1",
+  "spacing": 0,
+  "modules-left": [
+    "image#logo",
+    "hyprland/workspaces",
+  ],
+  "modules-center": [
+    "hyprland/window",
+  ],
+  "modules-right": [
+    "network",
+    "pulseaudio",
+    "clock",
+  ],
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "active-only": false,
+    "format": "{icon}",
+    "format-icons": {
+      "default": "",
+      "active": "󱓻",
+      "urgent": "󱓻"
+    },
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+    },
+  },
+  "hyprland/window": {
+    "format": "{}",
+  },
+  "network": {
+    "format": "{icon}",
+    "format-wifi": " ",
+    "tooltip": true,
+  },
+  "clock": {
+    "format": "{:%H:%M}",
+    "tooltip": true,
+    "tooltip-format": "{:%m/%d %H:%M}",
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-bluetooth": "",
+    "tooltip-format": "Volume : {volume}%",
+    "format-muted": "󰝟",
+    "format-icons": {
+      "headphone": "",
+      "default": ["󰖀","󰕾",""]
+    },
+    "scroll-step": 5
+  },
+  "image#logo": {
+    "path": "/home/miller/dotfiles/images/gentoo-signet.png",
+    "size": 20,
+  },
+}
