@@ -63,10 +63,14 @@ tooltip {
 }
 
 #window {
-  background-color: @base;
+  background-color: @overlay1;
   padding: 2px 10px;
   margin: 2px 0px;
   border-radius: 5px;
   color: @text;
   font-size: 12px;
+}
+
+window#waybar.empty #window {
+  background-color: transparent;
 }
