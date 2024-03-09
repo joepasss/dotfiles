@@ -8,8 +8,7 @@
 }
 
 window#waybar {
-  background-color: @base;
-  opacity: 0.5;
+  background-color: transparent;
 }
 
 #image {
@@ -64,10 +63,10 @@ tooltip {
 }
 
 #window {
-  background-color: @lavender;
+  background-color: @base;
   padding: 2px 10px;
   margin: 2px 0px;
   border-radius: 5px;
-  color: @mantle;
+  color: @text;
   font-size: 12px;
 }
