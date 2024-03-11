@@ -36,7 +36,10 @@
   "network": {
     "format": "{icon}",
     "format-wifi": " ",
+    "format-disconnected": " 󰖪 ",
     "tooltip": true,
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)  ",
+    "tooltip-format-disconnected": "",
   },
   "clock": {
     "format": "{:%H:%M}",
