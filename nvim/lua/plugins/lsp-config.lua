@@ -22,6 +22,7 @@ return {
           "mdx_analyzer",
           "rust_analyzer",
           "cmake",
+          "bashls"
         }
       })
     end,
@@ -57,7 +58,7 @@ return {
       lspconfig.eslint.setup {}
       lspconfig.flow.setup {}
       lspconfig.marksman.setup {}
-
+      lspconfig.bashls.setup {}
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})

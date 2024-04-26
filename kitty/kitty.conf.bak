@@ -1,0 +1,34 @@
+# FONTS
+font_family       "Hack Nerd Font"
+bold_font		      auto
+italic_font		    auto
+bold_italic_font	auto
+
+font_size 11.0
+
+# CURSOR
+cursor_shape beam
+
+# SCROLL
+scrollback_lines 2000
+scrollback_indicator_opacity 0.8
+
+# MOUSE
+mouse_hide_wait 3.0
+
+# HYPRLINKS
+url_prefixes file ftp ftps gemini git gopher http https irc ircs kitty mailto news sftp ssh
+detect_urls yes
+show_hyprlink_targets yes
+underline_hyprlinks always
+
+# SHORTCUTS
+clear_all_shortcuts yes
+map SUPER+c               copy_to_clipboard
+map SUPER+v               paste_from_clipboard
+map SUPER+shift+k         scroll_line_up
+map SUPER+shift+j         scroll_line_down
+map SUPER+shift+page_up   scroll_page_up
+map SUPER+shift+page_down scroll_page_down
+map SUPER+shift+home      scroll_home
+map SUPER+shift+end       scroll_end

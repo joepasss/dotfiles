@@ -1,7 +1,6 @@
 {
   "layer": "top",
   "position": "top",
-  "output": "HDMI-A-1",
   "spacing": 0,
   "modules-left": [
     "image#logo",
@@ -11,18 +10,22 @@
     "hyprland/window",
   ],
   "modules-right": [
-    "network",
     "pulseaudio",
+    "network",
     "clock",
   ],
+  "image#logo": {
+    "path": "/home/joepasss/.config/waybar/gentoo-signet.png",
+    "size": 20,
+  },
   "hyprland/workspaces": {
-    "on-click": "activate",
+    "on-click": "active",
     "active-only": false,
     "format": "{icon}",
     "format-icons": {
       "default": "",
       "active": "󱓻",
-      "urgent": "󱓻"
+      "urgent": "󱓻",
     },
     "persistent-workspaces": {
       "1": [],
@@ -55,10 +58,7 @@
       "headphone": "",
       "default": ["󰖀","󰕾",""]
     },
-    "scroll-step": 5
-  },
-  "image#logo": {
-    "path": "/home/miller/dotfiles/images/gentoo-signet.png",
-    "size": 20,
+    "scroll-step": 5,
+    "on-click": "~/.config/waybar/toggle_mute.sh",
   },
 }
