@@ -1,0 +1,10 @@
+# package.accept_keywords# required by app-office/obsidian (argument)
+=app-office/obsidian-1.5.11 ~amd64
+# required by dev-vcs/lazygit (argument)
+=dev-vcs/lazygit-0.41.0 ~amd64
+# required by uwufetch (argument)
+=app-misc/uwufetch-2.1 ~amd64
+# required by viu (argument)
+=media-gfx/viu-1.5.0 ~amd64
+# required by tofi (argument)
+=gui-apps/tofi-0.9.1 ~amd64
