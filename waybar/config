@@ -56,7 +56,7 @@
     "format-muted": "󰝟",
     "format-icons": {
       "headphone": "",
-      "default": ["󰖀","󰕾",""]
+      "default": ["󰖀 ","󰕾 "," "]
     },
     "scroll-step": 5,
     "on-click": "~/.config/waybar/toggle_mute.sh",
