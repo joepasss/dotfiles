@@ -25,6 +25,7 @@ alias gc="git commit"
 alias gs="git status"
 alias mac="ssh"
 alias sleep="loginctl suspend"
+alias Hyprland="dbus-launch --exit-with-session Hyprland -c ~/dotfiles/hypr/hyprland.conf"
 
 # run gui-programs
 alias firefox="hyprctl dispatch exec firefox"
@@ -35,6 +36,9 @@ alias cwa="~/projects/cwa/cwa.sh"
 
 # ssh config
 export TERM="xterm-256color"
+
+# neofetch start
+neofetch
 
 # git prompt
 source ~/gitstatus/gitstatus.prompt.sh
