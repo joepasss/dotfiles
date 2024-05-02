@@ -6,7 +6,7 @@ DOTFILE_DIR=$(dirname "$SCRIPT_DIR")
 ESELECT_REPO="/etc/portage/repos.conf/eselect-repo.conf"
 
 # test script
-source ./test.sh
+source ./scripts/test.sh
 
 # util scripts
 source ./utils/create_symlink.sh
@@ -16,10 +16,10 @@ source ./utils/overlay.sh
 source ./utils/unmask.sh
 
 # init scripts
-source ./cli_app/bash_init.sh
-source ./cli_app/tmux_init.sh
-
-source ./gui_app/gui_init.sh
+source ./scripts/init_prepare.sh
+source ./scripts/write_use_flag.sh
+source ./script/install_packages.sh
+source ./script/copy_config.sh
 
 while getopts "t" opt; do
   case $opt in
@@ -31,8 +31,21 @@ while getopts "t" opt; do
   esac
 done
 
-emerge_check "app-portage/gentoolkit"
+# copy_configs
+copy_configs
 
-bash_init
-tmux_init
-gui_init
+echo "need sudo ..."
+sudo -v
+
+# prepare
+unmask_package
+write_use_flag
+
+emerge_dependencies
+overlay_add
+
+# install
+install_packages
+
+sudo -k
+exit 0
