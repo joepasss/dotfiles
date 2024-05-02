@@ -22,7 +22,8 @@ return {
           "mdx_analyzer",
           "rust_analyzer",
           "cmake",
-          "bashls"
+          "bashls",
+          "pylsp",
         }
       })
     end,
@@ -53,12 +54,27 @@ return {
       lspconfig.jsonls.setup({
         capabilities = capabilities,
       })
-      lspconfig.clangd.setup {}
-      lspconfig.cmake.setup {}
-      lspconfig.eslint.setup {}
-      lspconfig.flow.setup {}
-      lspconfig.marksman.setup {}
-      lspconfig.bashls.setup {}
+      lspconfig.clangd.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.cmake.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.eslint.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.flow.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.marksman.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.bashls.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.pylsp.setup({
+        capabilities = capabilities,
+      })
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
