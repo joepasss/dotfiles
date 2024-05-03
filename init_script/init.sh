@@ -41,8 +41,8 @@ sudo -v
 unmask_package
 write_use_flag
 
-emerge_dependencies
 overlay_add
+emerge_dependencies
 
 # install
 install_packages
