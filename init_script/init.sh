@@ -18,8 +18,8 @@ source ./utils/unmask.sh
 # init scripts
 source ./scripts/init_prepare.sh
 source ./scripts/write_use_flag.sh
-source ./script/install_packages.sh
-source ./script/copy_config.sh
+source ./scripts/install_packages.sh
+source ./scripts/copy_config.sh
 
 while getopts "t" opt; do
   case $opt in
