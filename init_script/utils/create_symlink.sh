@@ -21,7 +21,7 @@ function create_symlink_home() {
   local filename=$(basename "$filepath")
 
   if [ -e $HOME/$filename ]; then
-    delete_symlink $HOME/$file
+    delete_symlink $HOME/$filename
   fi
 
   echo "create $filename symlink"
@@ -37,7 +37,7 @@ function create_symlink_config() {
   fi
 
   if [ -e $HOME/.config/$file ]; then
-    delete_symlink $HOME/.config/$filepath
+    delete_symlink $HOME/.config/$filename
   fi
 
   echo "create $filename symlink"
