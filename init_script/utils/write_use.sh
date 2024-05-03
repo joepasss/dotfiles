@@ -12,6 +12,7 @@ function write_use() {
 
   if [ -f $use_dir ]; then
     echo -e "\n\e[1m\e[31m/package.use/$package_name is already exist ...\e[0m"
+    echo -e "\e[1m$package_name use: \"$(cat /etc/portage/package.use/$package_name)\"\e[0m\n"
     echo -e "\e[1mWould you like to delete \"package.use/$package_name\"? \e[33m[\e[32myes\e[33m/\e[31mno\e[33m]\e[0m"
     read answer
 
