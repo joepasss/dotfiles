@@ -2,7 +2,7 @@
 
 echo "install dependencies ..."
 
-function overlay_add {
+function overlay_sync {
   overlay_add "guru" "git" "https://github.com/gentoo-mirror/guru.git"
   overlay_add "xarblu-overlay" "git" "https://github.com/gentoo-mirror/xarblu-overlay.git"
   overlay_add "riey" "git" "https:/github.com/Riey/overlay"
@@ -15,7 +15,7 @@ function emerge_dependencies {
   echo "emerge eselect-repository .."
   sudo emerge -vq "app-eselect/eselect-repository"
 
-  overlay_add
+  overlay_sync
 
   emerge_check "app-arch/lz4"
   emerge_check "dev-lang/go"
