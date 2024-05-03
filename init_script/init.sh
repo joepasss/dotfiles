@@ -40,8 +40,6 @@ sudo -v
 # prepare
 unmask_package
 write_use_flag
-
-overlay_add
 emerge_dependencies
 
 # install
