@@ -9,14 +9,17 @@ function overlay_add {
 }
 
 function emerge_dependencies {
-  emerge_check "app-portage/gentoolkit"
-  emerge_check "app-eselect/eselect-repository"
-  emerge_check "app-arch/lz4"
-  emerge_check "dev-lang/go"
-  emerge_check "net-libs/nodejs"
+  echo "emerge gentoolkit ..."
+  sudo emerge -vq "app-portage/gentoolkit"
+
+  echo "emerge eselect-repository .."
+  sudo emerge -vq "app-eselect/eselect-repository"
 
   overlay_add
 
+  emerge_check "app-arch/lz4"
+  emerge_check "dev-lang/go"
+  emerge_check "net-libs/nodejs"
   emerge_check "dev-vcs/lazygit"
 }
 
