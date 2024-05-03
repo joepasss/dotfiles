@@ -26,7 +26,7 @@ function create_symlink_config() {
     mkdir $HOME/.config/
   fi
 
-  if [ -e $HOME/.config/$file ]
+  if [ -e $HOME/.config/$file ]; then
     delete_symlink $HOME/.config/$file
   fi
 
