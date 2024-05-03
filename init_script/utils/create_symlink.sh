@@ -2,26 +2,16 @@
 
 function delete_symlink() {
   local dest=$1
-  local type=$2
-  local filename=$(basename "$dest")
 
-  echo "remove already exist $filename"
-  
-  if [ "$type" = "home" ]; then
-    rm -rf $HOME/$filename
-  fi
-
-  if [ ! "$type" = "home" ]; then
-    rm -rf $HOME/.config/$filename
-  fi
+  rm -rf $dest
 }
 
 function create_symlink_home() {
-  local file=$1
-  local filename=$(basename "$file")
+  local filepath=$1
+  local filename=$(basename "$filepath")
 
-  if [ -d $HOME/$filename ] || [ -f $HOME/$filename ]; then
-    delete_symlink $HOME/$file home
+  if [ -e $HOME/$filename ]; then
+    delete_symlink $HOME/$file
   fi
 
   echo "create $filename symlink"
@@ -36,8 +26,8 @@ function create_symlink_config() {
     mkdir $HOME/.config/
   fi
 
-  if [ -d $HOME/$filename ] || [ -f $HOME/$filename ]; then
-    delete_symlink $HOME/$file home
+  if [ -e $HOME/.config/$file ]
+    delete_symlink $HOME/.config/$file
   fi
 
   echo "create $filename symlink"
