@@ -38,7 +38,7 @@ echo "need sudo ..."
 sudo -v
 
 # prepare
-unmask_package
+unmask_packages
 write_use_flag
 emerge_dependencies
 

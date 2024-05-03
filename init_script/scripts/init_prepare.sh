@@ -20,7 +20,7 @@ function emerge_dependencies {
   emerge_check "dev-vcs/lazygit"
 }
 
-function unmask_pacakge {
+function unmask_pacakges {
   unmask_package "lazygit" "dev-vcs/lazygit ~amd64"
   unmask_package "tofi" "gui-apps/tofi ~amd64"
   unmask_package "nerd-fonts" "media-fonts/nerd-fonts ~amd64 ~x86"
