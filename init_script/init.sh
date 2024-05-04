@@ -6,20 +6,14 @@ DOTFILE_DIR=$(dirname "$SCRIPT_DIR")
 ESELECT_REPO="/etc/portage/repos.conf/eselect-repo.conf"
 
 # test script
-source ./scripts/test.sh
-
-# util scripts
-source ./utils/create_symlink.sh
-source ./utils/emerge_check.sh
-source ./utils/write_use.sh
-source ./utils/overlay.sh
-source ./utils/unmask.sh
+source $SCRIPT_DIR/scripts/test.sh
 
 # init scripts
-source ./scripts/init_prepare.sh
-source ./scripts/write_use_flag.sh
-source ./scripts/install_packages.sh
-source ./scripts/copy_config.sh
+source $SCRIPT_DIR/scripts/copy_configs.sh
+source $SCRIPT_DIR/scripts/unmask_packages.sh
+source $SCRIPT_DIR/scripts/write_use_flags.sh
+source $SCRIPT_DIR/scripts/sync_overlays.sh
+source $SCRIPT_DIR/scripts/install_packages.sh
 
 while getopts "t" opt; do
   case $opt in
