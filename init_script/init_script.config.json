@@ -1,0 +1,144 @@
+{
+  "dependencies": [
+    "dev-lang/go",
+    "app-portage/gentoolkit",
+    "app-eselect/eselect-repository",
+    "app-arch/lz4",
+    "app-misc/neofetch"
+  ],
+  "config_files": [
+    {
+      "file_name": ".bashrc",
+      "file_location": "~/dotfiles/bash/.bashrc",
+      "file_dest": "~/"
+    },
+    {
+      "file_name": ".tmux.conf",
+      "file_location": "~/dotfiles/tmux/.tmux.conf",
+      "file_dest": "~/"
+    },
+    {
+      "file_name": ".gitmux.conf",
+      "file_location": "~/dotfiles/gitmux/.gitmux.conf",
+      "file_dest": "~/"
+    },
+    {
+      "file_name": "kitty",
+      "file_location": "~/dotfiles/kitty",
+      "file_dest": "~/.config/"
+    },
+    {
+      "file_name": "dunst",
+      "file_location": "~/dotfiles/dunst",
+      "file_dest": "~/.config/"
+    },
+    {
+      "file_name": "nvim",
+      "file_location": "~/dotfiles/nvim",
+      "file_dest": "~/.config/"
+    },
+    {
+      "file_name": "tofi",
+      "file_location": "~/dotfiles/tofi",
+      "file_dest": "~/.config/"
+    },
+    {
+      "file_name": "waybar",
+      "file_location": "~/dotfiles/waybar",
+      "file_dest": "~/.config/"
+    }
+  ],
+  "overlays": [
+    {
+      "name": "guru",
+      "type": "git",
+      "url": "https://github.com/gentoo-mirror/guru.git"
+    },
+    {
+      "name": "xarblu-overlay",
+      "type": "git",
+      "url": "https://github.com/gentoo-mirror/xarblu-overlay.git"
+    }
+  ],
+  "unmask_packages": [
+    {
+      "name": "lazygit",
+      "text": "dev-vcs/lazygit ~amd64"
+    },
+    {
+      "name": "tofi",
+      "text": "gui-apps/tofi ~amd64"
+    },
+    {
+      "name": "nerd-fonts",
+      "text": "media-fonts/nerd-fonts ~amd64 ~x86"
+    },
+    {
+      "name": "obsidian",
+      "text": "app-office/obsidian ~amd64 ~arm64"
+    }
+  ],
+  "use_flags": [
+    {
+      "name": "waybar",
+      "text": "gui-apps/waybar logind network pipewire popups udev wifi"
+    },
+    {
+      "name": "nerd-fonts",
+      "text": "media-fonts/nerd-fonts d2coding firacode firamono hack jetbrainmono"
+    },
+    {
+      "name": "obsidian",
+      "text": "app-office/obsidian l10n_ko"
+    }
+  ],
+  "packages": {
+    "emerge": [
+      "app-misc/neofetch",
+      "app-misc/tmux",
+      "gui-wm/hyprland",
+      "gui-apps/waybar",
+      "x11-misc/dunst",
+      "app-editors/neovim",
+      "gui-apps/tofi",
+      "media-fonts/noto-emoji",
+      "media-fonts/noto-cjk",
+      "media-fonts/alee-fonts",
+      "media-fonts/fontawesome",
+      "media-fonts/nerd-fonts",
+      "app-office/obsidian"
+    ],
+    "build": [
+      {
+        "name": "gitstatus",
+        "type": "git_clone",
+        "clone_dir": "~/gitstatus",
+        "git_repo": "https://github.com/romkatv/gitstatus.git"
+      },
+      {
+        "name": "tpm",
+        "type": "git_clone",
+        "clone_dir": "~/.tmux/plugins/tpm",
+        "git_repo": "https://github.com/tmux-plugins/tpm"
+      },
+      {
+        "name": "gitmux",
+        "type": "build",
+        "build_type": "go",
+        "params": "install github.com/arl/gitmux@latest",
+        "bin_path": "~/go/bin/gitmux"
+      },
+      {
+        "name": "swww",
+        "type": "build",
+        "build_type": "cargo",
+        "params": "build --release",
+        "git_repo": "https://github.com/LGFae/swww.git",
+        "bin_path": [
+          "./tmp/target/release/swww",
+          "./tmp/target/release/swww-daemon"
+        ]
+      }
+    ]
+  }
+}
