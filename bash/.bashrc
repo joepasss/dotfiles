@@ -27,13 +27,6 @@ alias mac="ssh"
 alias sleep="loginctl suspend"
 alias Hyprland="dbus-launch --exit-with-session Hyprland -c ~/dotfiles/hypr/hyprland.conf"
 
-# run gui-programs
-alias firefox="hyprctl dispatch exec firefox"
-alias obsidan="hyprctl dispatch exec obsidian"
-
-# for development
-alias cwa="~/projects/cwa/cwa.sh"
-
 # ssh config
 export TERM="xterm-256color"
 
