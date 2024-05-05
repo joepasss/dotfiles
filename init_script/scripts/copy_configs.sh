@@ -1,41 +1,30 @@
 #!/bin/bash
 
 function copy_configs {  
-  local files=(\
-    "$DOTFILE_DIR/bash/.bashrc"\
-    "$DOTFILE_DIR/tmux/.tmux.conf"\
-    "$DOTFILE_DIR/gitmux/.gitmux.conf"\
-    "$DOTFILE_DIR/kitty/"\
-    "$DOTFILE_DIR/dunst/"\
-    "$DOTFILE_DIR/nvim/"\
-    "$DOTFILE_DIR/tofi/"\
-    "$DOTFILE_DIR/waybar/"\
-    "$DOTFILE_DIR/kime"\
-  )
-
-  local destinations=(\
-    "$HOME/"\
-    "$HOME/"\
-    "$HOME/"\
-    "$HOME/.config"\
-    "$HOME/.config"\
-    "$HOME/.config"\
-    "$HOME/.config"\
-    "$HOME/.config"\
-    "$HOME/.config"\
-  )
-
   echo -e "\e[1mcopy config files ...\e[0m"
   
-  for index in ${!files[*]}; do
-    local file_path=${files[$index]}
-    local file_name=$(basename $file_path)
-    local file_dest=${destinations[$index]}
+  local files=$(jq -c ".config_files[]" $JSON)
 
-    if [ -e $file_dest/$file_name ]; then
-      rm -rf $file_dest/$file_name
+  for file in $files; do
+    local file_name=$(echo $file | jq -r ".file_name")
+    local file_location=$(echo $file | jq -r ".file_location" | sed "s|\~|$HOME|")
+    local file_dest=$(echo $file | jq -r ".file_dest" | sed "s|\~|$HOME|")
+  
+    if [ -e "$file_dest$file_name" ] && [ ! $(readlink $file_dest$file_name) = "" ]; then
+      print_red "symlink exsist! \e[39m: $file_dest$file_name"
+      print_choice "Do you want create new symlink?"
+      read answer
+
+      if [ $answer = "yes" ] || [ $answer = "ye" ] || [ $answer = "y" ]; then
+        print_red "REMOVE $file_dest$file_name ..."
+        rm -rf $file_dest$file_name
+
+        print_green "CREATE $file_dest$file_name symlink ..."
+        ln -s $file_location $file_dest
+      fi
+    else
+      print_green "CREATE $file_dest$file_name symlink ..."
+      ln -s $file_location $file_dest
     fi
-
-    ln -s $file_path $file_dest
   done
 }

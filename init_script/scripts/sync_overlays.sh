@@ -1,76 +1,61 @@
 #!/bin/bash
 
 function sync_overlays {
-  local overlays=(\
-    "guru"\
-    "xarblu-overlay"\
-    "riey"\
-  )
-
-  local overlay_types=(\
-    "git"\
-    "git"\
-    "git"\
-  )
-
-  local overlay_urls=(\
-    "https://github.com/gentoo-mirror/guru.git"\
-    "https://github.com/gentoo-mirror/xarblu-overlay.git"\
-    "https://github.com/Riey/overlay"\
-  )
-
-  if ! command -v emaint $ > /dev/null || ! command -v eselect repository $ > /dev/null; then
-    echo "emaint or eselect repository not installed"
-    echo "emerge gentoolkit, eselect-repository ..."
-
-    sudo emerge -vq app-portage/gentoolkit app-eselect/eselect-repository
-  fi
-
-  if [ ! -e $ESELECT_REPO ]; then
-    sudo mkdir -p $ESELECT_REPO
-  fi
-
-  for index in ${!overlays[*]}; do
-    if ! grep -q "${overlays[$index]}" "$ESELECT_REPO";then
-      if ! eselect repository list | grep -q "\[${overlays[$index]}\]"; then
-        sudo eselect repository add ${overlays[$index]} ${overlay_types[$index]} ${overlay_urls[$index]}
-      fi
-
-      echo "overlay sync"
-      sudo eselect repository enable ${overlays[$index]}
-      sudo emaint sync -r ${overlays[$index]}
-    fi
-  done
-}
-
-function sync_overlays_test {
-  local overlays=(\
-    "guru"\
-    "xarblu-overlay"\
-    "riey"\
-  )
-
-  echo -e "\e[1msync_overlays test\e[0m"
-
+  local overlays=$(jq -c ".overlays[]" $JSON)
+  
   if ! command -v emaint $ > /dev/null; then
-    echo "cannot execute \"emaint\"!"
-    echo "test failed ..."
-    exit 1
+    print_error "there is no \"emaint\" program!"
+    print_choice "do you want emerge \"app-portage/gentoolkit\" package?"
+    read answer
+
+    if [ $answer = "yes" ] || [ $answer = "ye" ] || [ $answer = "y" ]; then
+      print_green "emerge \"app-portage/gentoolkit\" package ..."
+      sudo emerge -vq app-portage/gentoolkit
+    else
+      print_error "can't execute \"sync_overlays\" without emaint program ..."
+      print_red "exit program"
+      exit 1
+    fi
   fi
 
   if ! command -v eselect repository $ > /dev/null; then
-    echo "cannot execute \"eselect repository\"!"
-    echo "test failed ..."
-    exit 1
-  fi
+    print_error "there is no \"eselect repository\" program!"
+    print_choice "do you want emerge \"app-eselect/eselect-repository\" package?"
+    read answer
 
-  for index in ${!overlays[*]}; do
-    if ! grep -q "\[${overlays[$index]}\]" "$ESELECT_REPO"; then
-      echo "${overlays[$index]} repository not found ..."
-      echo "test failed ..."
+    if [ $answer = "yes" ] || [ $answer = "ye" ] || [ $answer = "y" ]; then
+      print_green "emerge \"app-eselect/eselect-repository\" package ..."
+      sudo emerge -vq app-eselect/eselect-repository
+    else
+      print_error "can't execute \"sync_overlay\" without eselect repository program ..."
+      print_red "exit program"
       exit 1
     fi
-  done
+  fi
 
-  echo -e "\e[1mpassed\e[0m"
+  if [ ! -d $(dirname $ESELECT_REPO) ]; then
+    print_yellow "there is no $(dirname $ESELECT_REPO) directory ..."
+    print_green "create $(dirname $ESELECT_REPO)"
+    sudo mkdir -p $(dirname $ESELECT_REPO)
+  fi
+
+  for overlay in $overlays; do
+    local overlay_name=$(echo $overlay | jq -r ".name")
+    local overlay_type=$(echo $overlay | jq -r ".type")
+    local overlay_url=$(echo $overlay | jq -r ".url")
+  
+    if ! grep -q "\[$overlay_name\]" "$ESELECT_REPO" || [ ! -f $ESELECT_REPO ]; then
+      if ! eselect repository list | grep -q $overlay_name; then
+        print_yellow "add \"$overlay_name\" repository..."
+        sudo eselect repository add $overlay_name $overlay_type $overlay_url
+      fi
+
+      print_yellow "enable \"$overlay_name\" repository..."
+      sudo eselect repository enable $overlay_name
+
+      print_yellow "sync \"$overlay_name\"..."
+      sudo emaint sync -r $overlay_name
+    fi
+  done
 }
+

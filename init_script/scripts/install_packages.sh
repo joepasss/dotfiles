@@ -1,142 +1,92 @@
 #!/bin/bash
 
-function gitstatus_install {
-  if [ ! -f $HOME/gitstatus ]; then
-    git clone --depth=1 https://github.com/romkatv/gitstatus.git $HOME/gitstatus
-  fi
-}
-
-function gitstatus_test {
-  if [ ! -d $HOME/gitstatus ]; then
-    echo -e "no gitstatus..."
-    echo -e "test failed..."
-    exit 1
-  fi
-}
-
-function tpm_install {
-  if [ ! -d $HOME/.tmux/plugins/tpm ]; then
-    git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
-  fi
-}
-
-function tpm_test {
-  if [ ! -d $HOME/.tmux/plugins/tpm ]; then
-    echo -e "no tpm..."
-    echo -e "test failed..."
-    exit 1
-  fi
-}
-
-function gitmux_install {
-  if [ ! -f $HOME/go/bin/gitmux ]; then
-    if [ ! -f /usr/bin/gitmux ]; then
-      go install github.com/arl/gitmux@latest
-      sudo mv $HOME/go/bin/gitmux /usr/bin
-    fi
-  fi
-}
-
-function gitmux_test {
-  if ! command -v gitmux > /dev/null; then
-    echo -e "no gitmux..."
-    echo -e "test failed..."
-    exit 1
-  fi
-}
-
-function swww_install {
-  if [ ! -f /usr/bin/swww ] && [ ! -f /usr/bin/swww-daemon ]; then
-    git clone https://github.com/LGFae/swww.git $SCRIPT_DIR/tmp
-    cd tmp
-    cargo build --release
-    sudo mv $SCRIPT_DIR/tmp/target/release/swww /usr/bin/
-    sudo mv $SCRIPT_DIR/tmp/target/release/swww-daemon /usr/bin
-    cd $SCRIPT_DIR
-    rm -rf $SCRIPT_DIR/tmp
-  fi
-}
-
-function swww_test {
-  if ! command -v swww > /dev/null && ! command -v swww-daemon > /dev/null; then
-    echo -e "no swww..."
-    echo -e "test failed..."
-    exit 1
-  fi
-}
-
 function install_packages {
-  local packages=(\
-    "dev-lang/go"\
-    "app-arch/lz4"\
-    "app-misc/tmux"\
-    "gui-wm/hyprland"\
-    "gui-apps/waybar"\
-    "x11-misc/dunst"\
-    "app-editors/neovim"\
-    "gui-apps/tofi"\
-    "media-fonts/noto-emoji"\
-    "media-fonts/noto-cjk"\
-    "media-fonts/alee-fonts"\
-    "media-fonts/fontawesome"\
-    "media-fonts/nerd-fonts"\
-    "app-i18n/kime"\
-    "app-office/obsidian"\
-  )
-  
-  local emerge_packages=""
+  local emerge=""
+  local emerge_packages=$(jq -c ".packages | .emerge[]" $JSON | sed 's/"//g')
+  local build_packages=$(jq -c ".packages | .build[]" $JSON | sed 's/ /SP/g')
+  local bin_dir="/usr/bin"
 
-  for index in ${!packages[*]}; do  
-    if ! qlist -IRv | grep -q "$name"; then
-      emerge_packages="$emerge_packages${packages[$index]} "
+  for build_package in $build_packages; do
+    local name=$(echo $build_package | jq -r ".name")
+    local type=$(echo $build_package | jq -r ".type")
+
+    if [ $type == "git_clone" ]; then
+      local git_repo=$(echo $build_package | jq -r ".git_repo")
+      local clone_dir=$(echo $build_package | jq -r ".clone_dir")
+      clone_dir=$(echo $clone_dir | sed "s|\~|$HOME|")
+
+      if [ ! -e $clone_dir ]; then
+        print_green "git clone \"$name\" in \"$clone_dir\"..."
+        git clone $git_repo $clone_dir
+      fi
+    fi
+
+    if [ $type == "build" ]; then
+      local build_type=$(echo $build_package | jq -r ".build_type")
+
+      if [ $build_type == "go" ]; then
+        local params=$(echo $build_package | jq -r ".params")
+        params=$(echo $params | sed 's/SP/ /g')
+
+        if ! command -v go; then
+          print_error "no \"go\" command ..."
+          exit 1
+        fi
+
+        go $params
+      fi
+
+      if [ $build_type == "cargo" ]; then
+        local git_repo=$(echo $build_package | jq -r ".git_repo")
+        local params=$(echo $build_package | jq -r ".params")
+        params=$(echo $params | sed 's/SP/ /g')
+
+        if ! command -v cargo; then
+          print_error "no \"cargo\" command ..."
+          exit 1
+        fi
+
+        print_green "clone \"$name\" to \"$SCRIPT_DIR/tmp\" dir..."
+        mkdir "$SCRIPT_DIR/tmp"
+        git clone $git_repo "$SCRIPT_DIR/tmp"
+
+        cd "$SCRIPT_DIR/tmp"
+        cargo $params
+      fi
+
+      local bin_path=$(echo $build_package | jq -r ".bin_path")
+      bin_path=$(echo $bin_path | sed 's/[][]//g; s/"//g; s/,/ /g')
+      bin_path=$(echo $bin_path | sed "s|\~|$HOME|g")
+      bin_path=$(echo $bin_path | sed "s|./tmp|$SCRIPT_DIR/tmp|g")
+
+      for path in $bin_path; do
+        if [ ! -e $path ]; then
+          print_error "there is no \"$path\" binary file..."
+          exit 1
+        fi
+        
+        sudo mv $path "$bin_dir/"
+      done
     fi
   done
 
-  if [ "$emerge_packages" != "" ]; then
-    echo "emerge_packages: $emerge_packages"
-
-    # sudo emerge -vq $emerge_packages
-
-    # tpm_install
-    # gitstatus_install
-    # gitmux_install
-    # swww_install
+  if [ -e "$SCRIPT_DIR/tmp" ]; then
+    print_yellow "remove \"$SCRIPT_DIR/tmp\" dir..."
+    cd $SCRIPT_DIR
+    rm -rf "$SCRIPT_DIR/tmp"
   fi
-}
 
-function install_packages_test {
-  local packages=(\
-    "dev-lang/go"\
-    "app-arch/lz4"\
-    "app-misc/tmux"\
-    "gui-wm/hyprland"\
-    "gui-apps/waybar"\
-    "x11-misc/dunst"\
-    "app-editors/neovim"\
-    "gui-apps/tofi"\
-    "media-fonts/noto-emoji"\
-    "media-fonts/noto-cjk"\
-    "media-fonts/alee-fonts"\
-    "media-fonts/fontawesome"\
-    "media-fonts/nerd-fonts"\
-    "app-i18n/kime"\
-    "app-office/obsidian"\
-  )
-
-  echo -e "\e[1minstall_packages test\e[0m"
-
-  for index in ${!packages[*]}; do  
-    if ! qlist -IRv | grep -q "$name"; then
-      echo -e "no ${packages[$index]}..."
-      echo -e "test failed..."
-      exit 1
+  
+  for emerge_package in $emerge_packages; do
+    if ! qlist -IRv | grep -q "$emerge_package"; then
+      emerge="$emerge $emerge_package"
     fi
   done
 
-  gitstatus_test
-  tpm_test
-  gitmux_test
-  swww_test
+  emerge=$(echo "$emerge" | sed 's/^[[:space:]]*//')
 
-  echo -e "\e[1mpassed\e[0m"
+  if [ ! -z "$emerge" ]; then
+    print_yellow "emerge package\e[39m $emerge"
+    sudo emerge -avq $emerge
+  fi
 }
