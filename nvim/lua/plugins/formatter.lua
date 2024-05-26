@@ -7,6 +7,9 @@ return {
           lua = {
             require("formatter.filetypes.lua").stylua,
           },
+          sh = {
+            require("formatter.filetypes.sh").shfmt,
+          },
         },
       })
     end,
