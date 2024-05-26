@@ -13,6 +13,7 @@ return {
           "lua-ls",
           "bash-language-server",
           "clangd",
+          "rust-analyzer",
         },
       })
     end,
@@ -33,6 +34,10 @@ return {
       })
 
       lspconfig.clangd.setup({
+        capabilities = capabilities,
+      })
+
+      lspconfig.rust_analyzer.setup({
         capabilities = capabilities,
       })
     end,
