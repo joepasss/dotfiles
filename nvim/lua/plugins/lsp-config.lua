@@ -12,6 +12,7 @@ return {
         ensure_installed = {
           "lua-ls",
           "bash-language-server",
+          "clangd",
         },
       })
     end,
@@ -28,6 +29,10 @@ return {
       })
 
       lspconfig.bashls.setup({
+        capabilities = capabilities,
+      })
+
+      lspconfig.clangd.setup({
         capabilities = capabilities,
       })
     end,

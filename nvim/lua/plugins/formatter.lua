@@ -10,6 +10,9 @@ return {
           sh = {
             require("formatter.filetypes.sh").shfmt,
           },
+          c = {
+            require("formatter.filetypes.c").clangformat,
+          },
         },
       })
     end,
