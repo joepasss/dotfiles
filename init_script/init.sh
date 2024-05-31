@@ -3,8 +3,8 @@
 # GLOBAL CONSTS
 SCRIPT_DIR=$(realpath $(dirname "$0"))
 DOTFILE_DIR=$(dirname "$SCRIPT_DIR")
-ESELECT_REPO="/etc/portage/repos.conf/eselect-repo.conf"
-JSON="$SCRIPT_DIR/init_script.config.json"
+
+source $SCRIPT_DIR/scripts/copy_configs.sh
 
 while getopts "t" opt; do
 	case $opt in
@@ -14,5 +14,7 @@ while getopts "t" opt; do
 		;;
 	esac
 done
+
+copy_configs
 
 exit 0
