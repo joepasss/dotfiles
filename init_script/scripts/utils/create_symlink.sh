@@ -11,6 +11,10 @@ function create_symlink() {
 		rm -rf "$dest/$filename"
 	fi
 
+	if [ -e "$dest" ]; then
+		mkdir $dest
+	fi
+
 	ln -s $file_path $dest
 	print_green "create \"$filename\" symlink done!"
 }
