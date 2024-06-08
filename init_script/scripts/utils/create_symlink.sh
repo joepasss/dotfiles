@@ -11,7 +11,7 @@ function create_symlink() {
 		rm -rf "$dest/$filename"
 	fi
 
-	if [ -e "$dest" ]; then
+	if [ ! -e "$dest" ]; then
 		mkdir $dest
 	fi
 
