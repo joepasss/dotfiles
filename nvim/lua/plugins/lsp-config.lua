@@ -8,23 +8,13 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
-      require("mason-lspconfig").setup({
+      require("mason").setup({
         ensure_installed = {
-          "lua_ls",
-          "tsserver",
+          "lua-ls",
+          "bash-language-server",
           "clangd",
-          "cssls",
-          "eslint",
-          "emmet_ls",
-          "html",
-          "jsonls",
-          "marksman",
-          "mdx_analyzer",
-          "rust_analyzer",
-          "cmake",
-          "bashls",
-          "pylsp",
-        }
+          "rust-analyzer",
+        },
       })
     end,
   },
@@ -32,53 +22,24 @@ return {
     "neovim/nvim-lspconfig",
     lazy = false,
     config = function()
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
       local lspconfig = require("lspconfig")
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
       lspconfig.lua_ls.setup({
         capabilities = capabilities,
       })
-      lspconfig.tsserver.setup({
-        capabilities = capabilities,
-        filetypes = {
-          "typescript",
-        },
-      })
-      lspconfig.html.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.cssls.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.jsonls.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.clangd.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.cmake.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.eslint.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.flow.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.marksman.setup({
-        capabilities = capabilities,
-      })
+
       lspconfig.bashls.setup({
         capabilities = capabilities,
       })
-      lspconfig.pylsp.setup({
+
+      lspconfig.clangd.setup({
         capabilities = capabilities,
       })
 
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-      vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+      lspconfig.rust_analyzer.setup({
+        capabilities = capabilities,
+      })
     end,
   },
 }
