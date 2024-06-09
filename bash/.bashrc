@@ -18,19 +18,13 @@ export PATH="$HOME/go/bin:$PATH"
 
 # Aliases
 alias refresh="source ~/.bashrc"
-alias run="hyprctl dispatch exec"
 alias ga="git add"
 alias gc="git commit"
 alias gs="git status"
-alias mac="ssh"
 alias sleep="loginctl suspend"
-alias Hyprland="dbus-launch --exit-with-session Hyprland -c ~/dotfiles/hypr/hyprland.conf"
 
 # ssh config
 export TERM="xterm-256color"
-
-# neofetch start
-neofetch
 
 # git prompt
 source ~/gitstatus/gitstatus.prompt.sh
