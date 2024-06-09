@@ -2,7 +2,8 @@
 vim.g.mapleader = " "
 
 -- copy to clipboard
-vim.api.nvim_set_keymap("v", "<C-S-c>", '"+y', { noremap = true })
+vim.keymap.set("v", "<leader>c", '"+y')
+vim.keymap.set("n", "<leader>cc", '"+yy')
 
 -- neo-tree toggle
 vim.keymap.set("n", "<C-n>", ":Neotree toggle<CR>", { noremap = true })
