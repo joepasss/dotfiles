@@ -14,6 +14,7 @@ return {
           "bash-language-server",
           "clangd",
           "rust-analyzer",
+          "dockerfile-language-server",
         },
       })
     end,
@@ -35,9 +36,18 @@ return {
 
       lspconfig.clangd.setup({
         capabilities = capabilities,
+        cmd = { "clangd", "--compile-commands-dir=./build" },
+        init_options = {
+          compilationDatabaseDirectory = "build",
+        },
+        root_dir = lspconfig.util.root_pattern("compile_commands.json", ".git"),
       })
 
       lspconfig.rust_analyzer.setup({
+        capabilities = capabilities,
+      })
+
+      lspconfig.dockerls.setup({
         capabilities = capabilities,
       })
     end,
