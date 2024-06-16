@@ -15,6 +15,7 @@ return {
           "clangd",
           "rust-analyzer",
           "dockerfile-language-server",
+          "cmake-language-server",
         },
       })
     end,
@@ -22,6 +23,11 @@ return {
   {
     "neovim/nvim-lspconfig",
     lazy = false,
+    settings = {
+      CMake = {
+        filetypes = { "cmake", "CMakeLists.txt" },
+      },
+    },
     config = function()
       local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -48,6 +54,10 @@ return {
       })
 
       lspconfig.dockerls.setup({
+        capabilities = capabilities,
+      })
+
+      lspconfig.cmake.setup({
         capabilities = capabilities,
       })
     end,

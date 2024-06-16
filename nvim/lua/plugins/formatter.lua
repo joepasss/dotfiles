@@ -16,6 +16,9 @@ return {
           rust = {
             require("formatter.filetypes.rust").rustfmt,
           },
+          cmake = {
+            require("formatter.filetypes.cmake").cmakeformat,
+          },
         },
       })
     end,
