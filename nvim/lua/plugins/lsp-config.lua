@@ -16,6 +16,8 @@ return {
           "rust-analyzer",
           "dockerfile-language-server",
           "cmake-language-server",
+          "typescript-language-server",
+          "stylelint",
         },
       })
     end,
@@ -26,6 +28,9 @@ return {
     settings = {
       CMake = {
         filetypes = { "cmake", "CMakeLists.txt" },
+      },
+      Shell = {
+        filetypes = { "pre-commit", "pre-push" },
       },
     },
     config = function()
@@ -59,6 +64,26 @@ return {
 
       lspconfig.cmake.setup({
         capabilities = capabilities,
+      })
+
+      lspconfig.tsserver.setup({
+        capabilities = capabilities,
+      })
+
+      lspconfig.stylelint_lsp.setup({
+        capabilities = capabilities,
+        filetypes = { "css", "scss", "sass" },
+      })
+
+      lspconfig.emmet_ls.setup({
+        filetypes = { "html", "css", "typescriptreact", "sass" },
+        init_options = {
+          html = {
+            options = {
+              ["bem.enabled"] = true,
+            },
+          },
+        },
       })
     end,
   },
