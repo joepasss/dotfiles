@@ -25,6 +25,6 @@ function nvim_init() {
 		print_green "nvim install done!"
 	fi
 
-	create_symlink "nvim" "$DOTFILE_DIR/nvim/" "$HOME/.config"
+	create_symlink "nvim" "$DOTFILE_DIR/nvim/" "$HOME/.config/"
 	printf "\n"
 }
