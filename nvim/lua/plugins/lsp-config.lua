@@ -39,7 +39,7 @@ return {
     config = function()
       local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
+      
       lspconfig.typos_lsp.setup({
         capabilities = capabilities,
       })
@@ -96,6 +96,22 @@ return {
       lspconfig.somesass_ls.setup({
         capabilities = capabilities,
         filetypes = { "scss" },
+      })
+
+      lspconfig.stylelint_lsp.setup({
+        capabilities = capabilities,
+        filetypes = { "css", "scss", "sass" },
+      })
+
+      lspconfig.emmet_ls.setup({
+        filetypes = { "html", "css", "typescriptreact", "sass" },
+        init_options = {
+          html = {
+            options = {
+              ["bem.enabled"] = true,
+            },
+          },
+        },
       })
 
       lspconfig.stylelint_lsp.setup({
