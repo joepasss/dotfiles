@@ -39,7 +39,7 @@ return {
     config = function()
       local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      
+
       lspconfig.typos_lsp.setup({
         capabilities = capabilities,
       })
