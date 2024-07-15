@@ -10,17 +10,17 @@ return {
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "snyk_ls",
           "typos_lsp",
           "bashls",
           "clangd",
           "cmake",
+          "cssls",
           "dockerls",
           "docker_compose_language_service",
-          "emmet_ls",
+          "emmet_language_server",
           "html",
-          "jsonls",
           "tsserver",
+          "jsonls",
           "lua_ls",
           "somesass_ls",
           "stylelint_lsp",
@@ -39,10 +39,6 @@ return {
     config = function()
       local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-      lspconfig.snyk_ls.setup({
-        capabilities = capabilities,
-      })
 
       lspconfig.typos_lsp.setup({
         capabilities = capabilities,
@@ -65,6 +61,10 @@ return {
         capabilities = capabilities,
       })
 
+      lspconfig.cssls.setup({
+        capabilities = capabilities,
+      })
+
       lspconfig.dockerls.setup({
         capabilities = capabilities,
       })
@@ -73,7 +73,7 @@ return {
         capabilities = capabilities,
       })
 
-      lspconfig.emmet_ls.setup({
+      lspconfig.emmet_language_server.setup({
         capabilities = capabilities,
       })
 
@@ -95,6 +95,7 @@ return {
 
       lspconfig.somesass_ls.setup({
         capabilities = capabilities,
+        filetypes = { "scss" },
       })
 
       lspconfig.stylelint_lsp.setup({
