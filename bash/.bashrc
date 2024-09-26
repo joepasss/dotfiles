@@ -24,7 +24,8 @@ alias refresh="source ~/.bashrc"
 alias ga="git add"
 alias gc="git commit"
 alias gs="git status"
-alias sleep="loginctl suspend"
+alias ranger="export TERM=kitty; ranger ."
+alias tmux="export TERM='xterm-256color'; tmux"
 
 # ssh config
 export TERM="xterm-256color"
