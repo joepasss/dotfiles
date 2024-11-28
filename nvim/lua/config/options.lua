@@ -6,7 +6,7 @@ vim.opt.softtabstop = 2
 
 -- numbers
 vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 
 -- clipboard
 vim.opt.clipboard = "unnamedplus"

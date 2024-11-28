@@ -10,7 +10,6 @@ return {
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "typos_lsp",
           "bashls",
           "clangd",
           "cmake",
@@ -19,7 +18,7 @@ return {
           "docker_compose_language_service",
           "emmet_language_server",
           "html",
-          "tsserver",
+          "ts_ls",
           "jsonls",
           "lua_ls",
           "somesass_ls",
@@ -39,10 +38,6 @@ return {
     config = function()
       local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-      lspconfig.typos_lsp.setup({
-        capabilities = capabilities,
-      })
 
       lspconfig.bashls.setup({
         capabilities = capabilities,
@@ -85,7 +80,7 @@ return {
         capabilities = capabilities,
       })
 
-      lspconfig.tsserver.setup({
+      lspconfig.ts_ls.setup({
         capabilities = capabilities,
       })
 
