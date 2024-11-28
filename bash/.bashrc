@@ -32,3 +32,8 @@ export TERM="xterm-256color"
 
 # git prompt
 source ~/gitstatus/gitstatus.prompt.sh
+
+# nix prompt
+if [ -n "$IN_NIX_SHELL" ]; then
+  PS1='\[\033[01;32m\]\u@nix-shell\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\]${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}\n\[\033[01;$((31+!$?))m\]\$\[\033[00m\] \[\e]0;\u@\h: \w\a\]'
+fi
