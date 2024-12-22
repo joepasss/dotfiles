@@ -6,5 +6,6 @@
 `:Lazy update`
 
 ### keymaps
-open    `lazygit`   <leader>gg
-toggle  `neo-tree`  <C>m
+open    `lazygit`   `<leader>gg`
+toggle  `neo-tree`  `<C>m`
+focus   `neo-tree`  `<C>n`
